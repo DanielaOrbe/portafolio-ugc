@@ -1,0 +1,136 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+body {
+  background-color: #FAFAFA;
+  font-family: 'Inter', sans-serif;
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .font-display { font-family: 'Poppins', sans-serif; }
+::selection { background: #E8B4BC; color: #0A0A0A; }
+
+/* ---------- Saltar al contenido ---------- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: #0A0A0A;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 1rem;
+  color: #fff;
+}
+
+/* ---------- Gradientes y texturas ---------- */
+.gradient-champ {
+  background: linear-gradient(120deg, #F5D9DE 0%, #E8C9B8 45%, #D8C3D6 100%);
+}
+.gradient-text {
+  background: linear-gradient(120deg, #E8B4BC 0%, #C49A8F 55%, #9B8BB0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* ---------- Anillo degradado para la foto de perfil ---------- */
+.profile-ring {
+  background: linear-gradient(135deg, #E8B4BC, #E7C9A8, #9B8BB0);
+  padding: 6px;
+}
+/* ---------- Efecto de brillo sutil en botones ---------- */
+.btn-glow { box-shadow: 0 8px 24px -8px rgba(232, 180, 188, 0.7); }
+.btn-glow:hover { box-shadow: 0 12px 32px -8px rgba(232, 180, 188, 0.9); }
+/* ---------- Tarjetas con hover elegante ---------- */
+.card-lift { transition: transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .35s ease; }
+.card-lift:hover { transform: translateY(-6px); }
+/* ---------- Botón de play (decorativo: no intercepta clics) ---------- */
+.play-overlay {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  background: rgba(10,10,10,.28);
+  opacity: 1;
+  pointer-events: none;
+  transition: background .3s ease;
+}
+.video-card:hover .play-overlay,
+.video-card:focus-within .play-overlay {
+  background: rgba(10,10,10,.4);
+}
+.video-embed {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: #F7F1EE;
+}
+.video-embed img {
+  pointer-events: none;
+}
+/* ---------- Navbar: estado al hacer scroll ---------- */
+.nav-scrolled {
+  backdrop-filter: blur(12px);
+  background: rgba(250, 250, 250, 0.85) !important;
+  box-shadow: 0 4px 24px -12px rgba(10,10,10,.15);
+}
+/* ---------- Animación de aparición (solo si hay JS) ---------- */
+.reveal { opacity: 1; transform: none; }
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.js .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ---------- Accesibilidad: foco visible ---------- */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #E8B4BC; outline-offset: 2px; border-radius: 8px;
+}
+/* ---------- Menú móvil ---------- */
+#mobile-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  overflow: hidden;
+  transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+  transform-origin: top;
+}
+#mobile-menu.hidden-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+/* ---------- Scrollbar sutil ---------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #FAFAFA; }
+::-webkit-scrollbar-thumb { background: #E8B4BC; border-radius: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .js .reveal,
+  .js .reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .card-lift,
+  .play-overlay,
+  #mobile-menu,
+  .skip-link {
+    transition: none;
+  }
+  .animate-bounce {
+    animation: none !important;
+  }
+}

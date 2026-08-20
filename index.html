@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ============================================================
+       PORTAFOLIO UGC
+       Creadora: Daniela Orbe
+       Nichos: Tecnología & Belleza
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daniela Orbe · Creadora UGC | Tecnología & Belleza</title>
+  <meta name="description" content="Creadora de contenido UGC en tecnología y belleza. Videos orgánicos, dinámicos y estéticos que conectan marcas con audiencias reales. Basada en México, envíos globales." />
+  <meta name="theme-color" content="#FAFAFA" />
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Open Graph / Twitter (usa URLs absolutas al publicar el sitio) -->
+  <meta property="og:title" content="Daniela Orbe · Creadora UGC | Tecnología & Belleza" />
+  <meta property="og:description" content="Convierto los beneficios de tus productos en contenido visual que genera confianza y ventas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:image" content="assets/images/daniela-orbe-profile.webp" />
+  <meta property="og:image:alt" content="Daniela Orbe, creadora de contenido UGC" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Daniela Orbe · Creadora UGC | Tecnología & Belleza" />
+  <meta name="twitter:description" content="Convierto los beneficios de tus productos en contenido visual que genera confianza y ventas." />
+
+  <link rel="preload" as="image" href="assets/images/daniela-orbe-profile.webp" type="image/webp" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: '#FAFAFA',
+            cream: '#F7F1EE',
+            rose: {
+              soft: '#F5D9DE',
+              blush: '#E8B4BC',
+            },
+            champ: '#E7C9A8',
+            ink: '#0A0A0A',
+            muted: '#5A5A5A',
+          },
+          fontFamily: {
+            display: ['Poppins', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-base text-ink font-body">
+
+  <a href="#inicio" class="skip-link">Saltar al contenido</a>
+
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 bg-base/80 transition-all duration-300">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4" aria-label="Navegación principal">
+      <a href="#inicio" class="font-display font-semibold text-lg tracking-tight">
+        Daniela<span class="gradient-text">Orbe</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-muted">
+        <li><a href="#inicio" class="hover:text-ink transition-colors">Inicio</a></li>
+        <li><a href="#portfolio" class="hover:text-ink transition-colors">Portafolio</a></li>
+        <li><a href="#servicios" class="hover:text-ink transition-colors">Servicios</a></li>
+        <li><a href="#contacto" class="hover:text-ink transition-colors">Contacto</a></li>
+      </ul>
+
+      <a href="mailto:danielaorbe98@gmail.com"
+         class="hidden md:inline-flex items-center gap-2 bg-ink text-white text-sm font-medium px-5 py-2.5 rounded-full btn-glow hover:opacity-90 transition-opacity">
+        ¡Trabajemos juntos!
+      </a>
+
+      <button id="menu-btn" type="button" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="w-6 h-0.5 bg-ink rounded"></span>
+        <span class="w-6 h-0.5 bg-ink rounded"></span>
+        <span class="w-6 h-0.5 bg-ink rounded"></span>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden hidden-menu bg-base/95 backdrop-blur-md border-t border-champ/40 px-6 py-4">
+      <ul class="flex flex-col gap-4 text-sm font-medium text-muted">
+        <li><a href="#inicio" class="block py-1">Inicio</a></li>
+        <li><a href="#portfolio" class="block py-1">Portafolio</a></li>
+        <li><a href="#servicios" class="block py-1">Servicios</a></li>
+        <li><a href="#contacto" class="block py-1">Contacto</a></li>
+        <li>
+          <a href="mailto:danielaorbe98@gmail.com"
+             class="inline-flex items-center gap-2 bg-ink text-white text-sm font-medium px-5 py-2.5 rounded-full mt-2">
+            ¡Trabajemos juntos!
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="min-h-screen flex items-center justify-center pt-24 pb-16 px-6">
+      <div class="max-w-3xl w-full text-center reveal">
+
+        <div class="profile-ring inline-block rounded-full mb-8">
+          <img
+            src="assets/images/daniela-orbe-profile.webp"
+            alt="Daniela Orbe, creadora de contenido UGC"
+            width="176"
+            height="176"
+            fetchpriority="high"
+            class="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
+          />
+        </div>
+
+        <h1 class="font-display text-4xl md:text-5xl font-bold leading-tight">
+          Hola, soy <span class="gradient-text">Daniela Orbe</span> ✨
+        </h1>
+
+        <p class="mt-3 font-display text-base md:text-lg font-medium text-muted">
+          Creadora de Contenido UGC&nbsp;·&nbsp;Tecnología &amp; Belleza
+        </p>
+
+        <p class="mt-6 text-muted text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+          Ayudo a las marcas a conectar de forma auténtica con su audiencia a través de
+          videos orgánicos, dinámicos y estéticos optimizados para redes sociales.
+          Convierto los beneficios de tus productos en contenido visual que genera
+          confianza y ventas.
+        </p>
+
+        <p class="mt-6 text-sm text-muted">
+          📍 Basada en México&nbsp;·&nbsp;Envíos globales
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="mailto:danielaorbe98@gmail.com"
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-ink text-white font-display font-semibold px-8 py-4 rounded-full btn-glow hover:opacity-90 transition-opacity">
+            ¡Trabajemos juntos!
+          </a>
+          <!-- Cambia 52XXXXXXXXXX por tu WhatsApp con código de país -->
+          <a href="https://wa.me/52XXXXXXXXXX"
+             target="_blank" rel="noopener noreferrer"
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-ink/20 text-ink font-display font-medium px-8 py-4 rounded-full hover:bg-cream transition-colors">
+            Escríbeme por WhatsApp
+          </a>
+        </div>
+
+        <div class="mt-14 flex justify-center text-muted/60 animate-bounce" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-12 reveal">
+          <span class="inline-block bg-rose-soft text-ink text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full">
+            UGC Portfolio
+          </span>
+          <h2 class="mt-4 font-display text-3xl md:text-4xl font-bold">Contenido que conecta</h2>
+          <p class="mt-3 text-muted max-w-xl mx-auto">
+            Una muestra de mis videos verticales para TikTok, Reels y pauta publicitaria.
+          </p>
+        </div>
+
+        <!-- Sustituye cada VIDEO_ID_X por el ID de tu video de YouTube -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_1" aria-label="Reproducir: Unboxing de gadget inteligente">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_1/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Tecnología
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Unboxing y Primeras Impresiones
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">Gadget inteligente</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_2" aria-label="Reproducir: Rutina de skincare estética">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Belleza
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Rutina de Skincare Estética
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">ASMR</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_3" aria-label="Reproducir: Tutorial de app móvil">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_3/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Tecnología
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Tutorial / Demostración de App Móvil
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">App móvil</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_4" aria-label="Reproducir: Reseña honesta de producto de belleza">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_4/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Belleza
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Reseña honesta y Testimonio de Producto
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">Reseña honesta</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_5" aria-label="Reproducir: Tips de tecnología para principiantes">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_5/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Tecnología
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Tips y Trucos Rápidos
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">TikTok / Reels</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_6" aria-label="Reproducir: Get Ready With Me">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_6/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Belleza
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Get Ready With Me (GRWM)
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">Maquillaje</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_7" aria-label="Reproducir: Haul de gadgets de tecnología">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_7/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Tecnología
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Haul y Comparativas
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">Gadgets</p>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-cream shadow-sm card-lift">
+              <button type="button" class="video-embed absolute inset-0 w-full h-full" data-youtube-id="VIDEO_ID_8" aria-label="Reproducir: Antes y después de producto de belleza">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID_8/hqdefault.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" />
+                <span class="play-overlay">
+                  <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                </span>
+              </button>
+              <span class="absolute top-3 left-3 z-10 pointer-events-none bg-ink/70 backdrop-blur text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
+                Belleza
+              </span>
+            </div>
+            <h3 class="mt-3 font-display font-semibold text-sm leading-snug line-clamp-2">
+              Antes &amp; Después
+            </h3>
+            <p class="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-muted/80">Resultados reales</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios" class="py-20 px-6 gradient-champ">
+      <div class="max-w-5xl mx-auto">
+
+        <div class="text-center mb-12 reveal">
+          <span class="inline-block bg-white/70 text-ink text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full">
+            Servicios
+          </span>
+          <h2 class="mt-4 font-display text-3xl md:text-4xl font-bold">Soluciones para tu marca</h2>
+          <p class="mt-3 text-muted max-w-xl mx-auto">
+            Paquetes flexibles y adaptables a tu estrategia de contenido.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <article class="bg-white rounded-3xl p-8 shadow-sm card-lift reveal">
+            <div class="w-12 h-12 rounded-2xl bg-rose-soft grid place-items-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="3" />
+                <path d="M10 9l5 3-5 3z" />
+              </svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-lg">1 Video UGC Orgánico</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed">
+              Ideal para TikTok y Reels. Formato vertical de 15-30 segundos con guion, grabación y edición estética incluida.
+            </p>
+            <p class="mt-4 font-display font-semibold text-xl">A consultar</p>
+          </article>
+
+          <article class="bg-ink text-white rounded-3xl p-8 shadow-lg card-lift reveal relative overflow-hidden">
+            <span class="absolute top-5 right-5 bg-rose-soft text-ink text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
+              Popular
+            </span>
+            <div class="w-12 h-12 rounded-2xl bg-rose-blush grid place-items-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <path d="M14 2v6h6" />
+                <path d="M10 18l1-3-1-3 3 1 3-1-1 3 1 3-3-1z" />
+              </svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-lg">Paquete de 3 Videos</h3>
+            <p class="mt-2 text-sm text-white/70 leading-relaxed">
+              Mayor variedad de contenido para tu pauta publicitaria: 3 videos distintos con enfoque multi-ángulo y CTA adaptado.
+            </p>
+            <p class="mt-4 font-display font-semibold text-xl">A consultar</p>
+          </article>
+
+          <article class="bg-white rounded-3xl p-8 shadow-sm card-lift reveal">
+            <div class="w-12 h-12 rounded-2xl bg-champ/40 grid place-items-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="3" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="M21 15l-5-5L5 21" />
+              </svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-lg">Contenido Fotográfico</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed">
+              Fotos estéticas de producto en alta calidad: fondos limpios, luz natural y composición lista para usar.
+            </p>
+            <p class="mt-4 font-display font-semibold text-xl">A consultar</p>
+          </article>
+
+        </div>
+
+        <p class="text-center text-sm text-muted mt-10 reveal">
+          ¿Buscas un paquete a la medida? <a href="mailto:danielaorbe98@gmail.com" class="font-medium text-ink underline decoration-rose-blush underline-offset-4">Conversemos</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacto" class="bg-ink text-white py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+
+      <h2 class="font-display text-3xl md:text-4xl font-bold leading-tight">
+        ¿Lista para crear contenido <span class="text-rose-blush">que venda</span>?
+      </h2>
+      <p class="mt-4 text-white/70 max-w-xl mx-auto">
+        Cuéntame sobre tu producto y hagamos que se sienta inolvidable en la pantalla de tu audiencia.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:danielaorbe98@gmail.com"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-rose-blush text-ink font-display font-semibold px-8 py-4 rounded-full hover:opacity-90 transition-opacity">
+          ¡Trabajemos juntos!
+        </a>
+      </div>
+
+      <a href="mailto:danielaorbe98@gmail.com"
+         class="mt-8 inline-block font-medium text-white/80 hover:text-white transition-colors underline underline-offset-4 decoration-rose-blush">
+        danielaorbe98@gmail.com
+      </a>
+
+      <div class="mt-8 flex items-center justify-center gap-5">
+        <!-- Sustituye TUPERFIL por tu usuario real -->
+        <a href="https://www.tiktok.com/@TUPERFIL" target="_blank" rel="noopener noreferrer"
+           aria-label="TikTok" class="w-11 h-11 grid place-items-center rounded-full border border-white/20 hover:bg-rose-blush hover:text-ink hover:border-rose-blush transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.3 0 .58.05.86.13V9.4a6.33 6.33 0 0 0-.86-.05A6.34 6.34 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/TUPERFIL" target="_blank" rel="noopener noreferrer"
+           aria-label="Instagram" class="w-11 h-11 grid place-items-center rounded-full border border-white/20 hover:bg-rose-blush hover:text-ink hover:border-rose-blush transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/TUPERFIL" target="_blank" rel="noopener noreferrer"
+           aria-label="LinkedIn" class="w-11 h-11 grid place-items-center rounded-full border border-white/20 hover:bg-rose-blush hover:text-ink hover:border-rose-blush transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/>
+          </svg>
+        </a>
+      </div>
+
+      <p class="mt-10 text-sm text-white/50">
+        © <span id="year">2026</span> · Desarrollado con 🤍 por Daniela Orbe
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
