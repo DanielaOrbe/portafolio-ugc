@@ -1,0 +1,52 @@
+{
+    "images": [
+      {
+        "id": 1,
+        "title": "Proyecto UGC para marca de skincare",
+        "category": "UGC",
+        "aspect": "vertical",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Contenido UGC creado para marca de cuidado de la piel"
+      },
+      {
+        "id": 2,
+        "title": "Sesión de grabación en estudio",
+        "category": "Detrás de cámaras",
+        "aspect": "square",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Momento de una sesión de grabación de contenido"
+      },
+      {
+        "id": 3,
+        "title": "Video UGC para app de delivery",
+        "category": "UGC",
+        "aspect": "horizontal",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Video promocional creado para aplicación de reparto"
+      },
+      {
+        "id": 4,
+        "title": "Producto terminado - marca de café",
+        "category": "Proyecto final",
+        "aspect": "vertical",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Resultado final de contenido UGC para marca de café"
+      },
+      {
+        "id": 5,
+        "title": "En mi espacio de trabajo",
+        "category": "Detrás de cámaras",
+        "aspect": "square",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Foto de mi espacio de creación de contenido"
+      },
+      {
+        "id": 6,
+        "title": "Contenido para marca de moda",
+        "category": "UGC",
+        "aspect": "vertical",
+        "src": "assets/images/gallery/placeholder.jpg",
+        "alt": "Contenido visual creado para marca de ropa"
+      }
+    ]
+}  

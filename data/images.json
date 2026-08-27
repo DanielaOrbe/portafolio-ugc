@@ -1,0 +1,44 @@
+{
+  "images": [
+    {
+      "id": 1,
+      "title": "",
+      "category": "Lifestyle",
+      "aspect": "vertical",
+      "src": "assets/images/gallery/daniela-orbe-1.jpeg",
+      "alt": "Creadora de contenido UGC modelando un vestido"
+    },
+    {
+      "id": 2,
+      "title": "",
+      "category": "Lifestyle",
+      "aspect": "square",
+      "src": "assets/images/gallery/daniela-orbe-2.jpeg",
+      "alt": "Creadora de contenido UGC viendo el horizonte"
+    },
+    {
+      "id": 3,
+      "title": "",
+      "category": "Lifestyle",
+      "aspect": "horizontal",
+      "src": "assets/images/gallery/daniela-orbe-3.jpeg",
+      "alt": "Creadora de contenido UGC sonriendo"
+    },
+    {
+      "id": 4,
+      "title": "",
+      "category": "Lifestyle",
+      "aspect": "vertical",
+      "src": "assets/images/gallery/daniela-orbe-4.jpeg",
+      "alt": "Creadora de contenido UGC modelando en valquirico"
+    },
+    {
+      "id": 5,
+      "title": "",
+      "category": "Lifestyle",
+      "aspect": "square",
+      "src": "assets/images/gallery/daniela-orbe-5.jpeg",
+      "alt": "Creadora de contenido UGC sonriendo en la torre latinoamericana"
+    }
+  ]
+}

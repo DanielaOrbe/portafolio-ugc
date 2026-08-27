@@ -1,0 +1,45 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "title": "Unboxing y Primeras Impresiones",
+      "subtitle": "Gadget inteligente",
+      "category": "Tecnologia",
+      "platform": "youtube",
+      "youtubeId": "dQw4w9WgXcQ"
+    },
+    {
+      "id": 2,
+      "title": "Rutina de Skincare Estética",
+      "subtitle": "ASMR",
+      "category": "Belleza",
+      "platform": "tiktok",
+      "videoUrl": "https://www.tiktok.com/@tu_usuario/video/1234567890123456789",
+      "thumbnail": "assets/images/thumbnail/tiktok-1.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Tutorial / Demostración de App Móvil",
+      "subtitle": "App móvil",
+      "category": "Tecnologia",
+      "platform": "instagram",
+      "videoUrl": "https://www.instagram.com/reel/ABC123DEF/",
+      "thumbnail": "assets/images/thumbnail/instagram-1.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Reel de producto",
+      "subtitle": "Lifestyle",
+      "category": "Lifestyle",
+      "platform": "facebook",
+      "videoUrl": "https://www.facebook.com/reel/2932841807054988",
+      "thumbnail": "assets/images/thumbnail/facebook-1.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Video próximamente",
+      "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
+      "comingSoon": true
+    }
+  ]
+}

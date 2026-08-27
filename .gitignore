@@ -1,0 +1,9 @@
+*.log
+.env
+*.zip
+index.local.html
+data/videos.local.json
+data/images.local.json
+node_modules/
+assets/images/gallery/originales/
+.DS_Store

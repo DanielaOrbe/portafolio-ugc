@@ -1,0 +1,19 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "title": "Empezando esta nueva etapa",
+      "subtitle": "Lifestyle",
+      "category": "Lifestyle",
+      "platform": "tiktok",
+      "videoUrl": "https://www.tiktok.com/@soy_danielaorbe/video/7678200631508749576?is_from_webapp=1&sender_device=pc&web_id=7466110252145214982",
+      "thumbnail": "assets/images/thumbnail-tiktok-1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Video próximamente",
+      "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
+      "comingSoon": true
+    }
+  ]
+}

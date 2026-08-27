@@ -1,0 +1,92 @@
+# ============================================================
+# GitHub Actions: Build & Deploy Portfolio
+# ============================================================
+# Reemplaza los placeholders de contacto, redes y foto en index.html
+# con GitHub Secrets. data/videos.json se despliega tal cual (URLs reales).
+# Se despliega automáticamente a GitHub Pages en cada push a main.
+
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build from templates
+        run: |
+          SITE_URL="${{ vars.SITE_URL }}"
+          if [ -z "$SITE_URL" ]; then
+            OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+            REPO="$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')"
+            SITE_URL="https://${OWNER}.github.io/${REPO}"
+          fi
+          SITE_URL="${SITE_URL%/}"
+
+          PROFILE_IMAGE_PATH="${{ secrets.PROFILE_IMAGE_PATH }}"
+          PROFILE_IMAGE_PATH="${PROFILE_IMAGE_PATH#./}"
+          PROFILE_IMAGE_PATH="${PROFILE_IMAGE_PATH#/}"
+          if [[ "$PROFILE_IMAGE_PATH" == http://* || "$PROFILE_IMAGE_PATH" == https://* ]]; then
+            OG_IMAGE_URL="$PROFILE_IMAGE_PATH"
+          else
+            OG_IMAGE_URL="${SITE_URL}/${PROFILE_IMAGE_PATH}"
+          fi
+
+          FACEBOOK_USERNAME_ID="${{ secrets.FACEBOOK_USERNAME_ID }}"
+          facebook_value="${FACEBOOK_USERNAME_ID#@}"
+          facebook_value="${facebook_value%/}"
+          if [[ "$facebook_value" == http://* || "$facebook_value" == https://* ]]; then
+            FACEBOOK_URL="$facebook_value"
+          elif [[ "$facebook_value" == *facebook.com/* || "$facebook_value" == *facebook.com ]]; then
+            FACEBOOK_URL="https://${facebook_value#//}"
+          elif [[ "$facebook_value" =~ ^[0-9]+$ ]]; then
+            FACEBOOK_URL="https://www.facebook.com/profile.php?id=${facebook_value}"
+          elif [ -n "$facebook_value" ]; then
+            FACEBOOK_URL="https://www.facebook.com/${facebook_value}"
+          else
+            FACEBOOK_URL="https://www.facebook.com/"
+          fi
+
+          sed -i "s|{{CONTACT_EMAIL}}|${{ secrets.CONTACT_EMAIL }}|g" index.html
+          sed -i "s|{{WHATSAPP_NUMBER}}|${{ secrets.WHATSAPP_NUMBER }}|g" index.html
+          sed -i "s|{{TIKTOK_USERNAME}}|${{ secrets.TIKTOK_USERNAME }}|g" index.html
+          sed -i "s|{{INSTAGRAM_USERNAME}}|${{ secrets.INSTAGRAM_USERNAME }}|g" index.html
+          sed -i "s|{{FACEBOOK_URL}}|${FACEBOOK_URL}|g" index.html
+          sed -i "s|{{SITE_URL}}|${SITE_URL}|g" index.html
+          sed -i "s|{{OG_IMAGE_URL}}|${OG_IMAGE_URL}|g" index.html
+          sed -i "s|{{PROFILE_IMAGE_PATH}}|${PROFILE_IMAGE_PATH}|g" index.html
+          sed -i "s|{{GOATCOUNTER_CODE}}|${{ secrets.GOATCOUNTER_CODE }}|g" index.html
+
+          echo "✅ index.html generado"
+          echo "SITE_URL=${SITE_URL}"
+          echo "OG_IMAGE_URL=${OG_IMAGE_URL}"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
