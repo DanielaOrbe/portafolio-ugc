@@ -2,7 +2,7 @@
 # GitHub Actions: Build & Deploy Portfolio
 # ============================================================
 # Reemplaza los placeholders de contacto, redes y foto en index.html
-# con GitHub Secrets. data/videos.json se despliega tal cual (URLs reales).
+# con GitHub Secrets (o Variables). data/videos.json se despliega tal cual.
 # Se despliega automáticamente a GitHub Pages en cada push a main.
 
 name: Build & Deploy
@@ -10,6 +10,7 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,9 +28,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Build from templates
+        env:
+          # Acepta Secret o Variable (Settings → Secrets and variables → Actions)
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL || vars.CONTACT_EMAIL }}
+          WHATSAPP_NUMBER: ${{ secrets.WHATSAPP_NUMBER || vars.WHATSAPP_NUMBER }}
+          TIKTOK_USERNAME: ${{ secrets.TIKTOK_USERNAME || vars.TIKTOK_USERNAME }}
+          INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME || vars.INSTAGRAM_USERNAME }}
+          FACEBOOK_USERNAME_ID: ${{ secrets.FACEBOOK_USERNAME_ID || vars.FACEBOOK_USERNAME_ID }}
+          PROFILE_IMAGE_PATH: ${{ secrets.PROFILE_IMAGE_PATH || vars.PROFILE_IMAGE_PATH }}
+          GOATCOUNTER_CODE: ${{ secrets.GOATCOUNTER_CODE || vars.GOATCOUNTER_CODE }}
+          SITE_URL: ${{ vars.SITE_URL }}
         run: |
-          SITE_URL="${{ vars.SITE_URL }}"
+          set -euo pipefail
+
+          if [ -z "${CONTACT_EMAIL}" ]; then
+            echo "::error::CONTACT_EMAIL no está definido."
+            echo "Crea un Repository secret (no Environment secret) en:"
+            echo "  Settings → Secrets and variables → Actions → Secrets → New repository secret"
+            echo "Nombre exacto: CONTACT_EMAIL"
+            echo "Después vuelve a ejecutar este workflow."
+            exit 1
+          fi
+
+          SITE_URL="${SITE_URL:-}"
           if [ -z "$SITE_URL" ]; then
             OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
             REPO="$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')"
@@ -37,7 +62,7 @@ jobs:
           fi
           SITE_URL="${SITE_URL%/}"
 
-          PROFILE_IMAGE_PATH="${{ secrets.PROFILE_IMAGE_PATH }}"
+          PROFILE_IMAGE_PATH="${PROFILE_IMAGE_PATH:-}"
           PROFILE_IMAGE_PATH="${PROFILE_IMAGE_PATH#./}"
           PROFILE_IMAGE_PATH="${PROFILE_IMAGE_PATH#/}"
           if [[ "$PROFILE_IMAGE_PATH" == http://* || "$PROFILE_IMAGE_PATH" == https://* ]]; then
@@ -46,7 +71,7 @@ jobs:
             OG_IMAGE_URL="${SITE_URL}/${PROFILE_IMAGE_PATH}"
           fi
 
-          FACEBOOK_USERNAME_ID="${{ secrets.FACEBOOK_USERNAME_ID }}"
+          FACEBOOK_USERNAME_ID="${FACEBOOK_USERNAME_ID:-}"
           facebook_value="${FACEBOOK_USERNAME_ID#@}"
           facebook_value="${facebook_value%/}"
           if [[ "$facebook_value" == http://* || "$facebook_value" == https://* ]]; then
@@ -61,15 +86,38 @@ jobs:
             FACEBOOK_URL="https://www.facebook.com/"
           fi
 
-          sed -i "s|{{CONTACT_EMAIL}}|${{ secrets.CONTACT_EMAIL }}|g" index.html
-          sed -i "s|{{WHATSAPP_NUMBER}}|${{ secrets.WHATSAPP_NUMBER }}|g" index.html
-          sed -i "s|{{TIKTOK_USERNAME}}|${{ secrets.TIKTOK_USERNAME }}|g" index.html
-          sed -i "s|{{INSTAGRAM_USERNAME}}|${{ secrets.INSTAGRAM_USERNAME }}|g" index.html
-          sed -i "s|{{FACEBOOK_URL}}|${FACEBOOK_URL}|g" index.html
-          sed -i "s|{{SITE_URL}}|${SITE_URL}|g" index.html
-          sed -i "s|{{OG_IMAGE_URL}}|${OG_IMAGE_URL}|g" index.html
-          sed -i "s|{{PROFILE_IMAGE_PATH}}|${PROFILE_IMAGE_PATH}|g" index.html
-          sed -i "s|{{GOATCOUNTER_CODE}}|${{ secrets.GOATCOUNTER_CODE }}|g" index.html
+          export SITE_URL OG_IMAGE_URL FACEBOOK_URL PROFILE_IMAGE_PATH
+
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          html_path = Path("index.html")
+          html = html_path.read_text(encoding="utf-8")
+          replacements = {
+              "{{CONTACT_EMAIL}}": os.environ.get("CONTACT_EMAIL", ""),
+              "{{WHATSAPP_NUMBER}}": os.environ.get("WHATSAPP_NUMBER", ""),
+              "{{TIKTOK_USERNAME}}": os.environ.get("TIKTOK_USERNAME", ""),
+              "{{INSTAGRAM_USERNAME}}": os.environ.get("INSTAGRAM_USERNAME", ""),
+              "{{FACEBOOK_URL}}": os.environ.get("FACEBOOK_URL", ""),
+              "{{SITE_URL}}": os.environ.get("SITE_URL", ""),
+              "{{OG_IMAGE_URL}}": os.environ.get("OG_IMAGE_URL", ""),
+              "{{PROFILE_IMAGE_PATH}}": os.environ.get("PROFILE_IMAGE_PATH", ""),
+              "{{GOATCOUNTER_CODE}}": os.environ.get("GOATCOUNTER_CODE", ""),
+          }
+          for placeholder, value in replacements.items():
+              html = html.replace(placeholder, value)
+          html_path.write_text(html, encoding="utf-8")
+
+          leftover = [p for p in replacements if p in html]
+          if leftover:
+              raise SystemExit(
+                  "Quedaron placeholders sin reemplazar: " + ", ".join(leftover)
+              )
+          PY
+
+          # Evita que Jekyll interprete {{...}} si Pages procesa el artifact
+          touch .nojekyll
 
           echo "✅ index.html generado"
           echo "SITE_URL=${SITE_URL}"
