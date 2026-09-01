@@ -6,4 +6,5 @@ data/videos.local.json
 data/images.local.json
 node_modules/
 assets/images/gallery/originales/
+assets/images/thumbnail/originales/
 .DS_Store

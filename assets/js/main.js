@@ -216,6 +216,19 @@ const getFacebookEmbedUrl = (url) => {
   }
 };
 
+const getVimeoEmbedUrl = (url) => {
+  if (!url) return '';
+  try {
+    const parsed = new URL(url, 'https://vimeo.com');
+    const match = parsed.pathname.match(/\/(\d+)/);
+    if (!match) return '';
+    const videoId = match[1];
+    return `https://player.vimeo.com/video/${videoId}?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0`;
+  } catch {
+    return '';
+  }
+};
+
 // ---------- Renderizado de videos ----------
 const galleryGrid = document.getElementById('gallery-grid');
 const filterContainer = document.getElementById('gallery-filters');
@@ -290,6 +303,19 @@ const createVideoCard = (video) => {
     buttonContent = `
       <button type="button" class="video-embed absolute inset-0 w-full h-full"
         data-platform="${video.platform}"
+        data-video-url="${video.videoUrl || ''}"
+        aria-label="${ariaText}: ${video.title}">
+        ${thumbnailSrc ? `<img src="${thumbnailSrc}" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" onerror="this.remove()" />` : ''}
+        <span class="play-overlay">
+          <span class="w-14 h-14 bg-white/90 rounded-full grid place-items-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A0A0A"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </span>
+      </button>`;
+  } else if (video.platform === 'vimeo') {
+    buttonContent = `
+      <button type="button" class="video-embed absolute inset-0 w-full h-full"
+        data-platform="vimeo"
         data-video-url="${video.videoUrl || ''}"
         aria-label="${ariaText}: ${video.title}">
         ${thumbnailSrc ? `<img src="${thumbnailSrc}" alt="" class="absolute inset-0 w-full h-full object-cover" width="480" height="360" loading="lazy" onerror="this.remove()" />` : ''}
@@ -504,6 +530,20 @@ const bindVideoEvents = () => {
           return;
         }
         unloadPlatformEmbeds(platform, btn);
+        btn.appendChild(createVideoIframe(embedUrl, title, true));
+        return;
+      }
+
+      if (platform === 'vimeo') {
+        if (btn.querySelector('iframe')) return;
+        const embedUrl = getVimeoEmbedUrl(btn.dataset.videoUrl);
+        if (!embedUrl) {
+          if (btn.dataset.videoUrl) {
+            window.open(btn.dataset.videoUrl, '_blank', 'noopener,noreferrer');
+          }
+          return;
+        }
+        unloadPlatformEmbeds('vimeo', btn);
         btn.appendChild(createVideoIframe(embedUrl, title, true));
         return;
       }

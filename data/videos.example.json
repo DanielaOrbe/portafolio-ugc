@@ -37,6 +37,15 @@
     },
     {
       "id": 5,
+      "title": "Campaña de producto",
+      "subtitle": "UGC",
+      "category": "Lifestyle",
+      "platform": "vimeo",
+      "videoUrl": "https://vimeo.com/123456789",
+      "thumbnail": "assets/images/thumbnail/vimeo-1.jpg"
+    },
+    {
+      "id": 6,
       "title": "Video próximamente",
       "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
       "comingSoon": true

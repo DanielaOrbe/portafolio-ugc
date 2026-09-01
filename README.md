@@ -50,7 +50,7 @@ No hay backend ni base de datos. El contenido vive en JSON; el contacto y las re
 ## Características
 
 - Diseño **100% responsivo** (mobile-first), paleta rosa pastel / champán y negro
-- Galería de videos UGC en **9:16** (YouTube / Shorts, TikTok, Instagram Reels y Facebook Reels)
+- Galería de videos UGC en **9:16** (YouTube / Shorts, TikTok, Instagram Reels, Facebook Reels y Vimeo)
 - Clic en la tarjeta: el player se embebe en el mismo recuadro (no abre otra pestaña)
 - Miniaturas en `assets/images/thumbnail/`
 - Filtros de categoría y plataforma solo cuando hay más de 5 videos reales y hay más de una categoría o plataforma
@@ -131,7 +131,7 @@ Con el servidor corriendo, esto es lo que puedes hacer de inmediato:
 
 1. **Navegar el portafolio** — hero, videos, fotos, servicios y contacto. En móvil, abre el menú hamburguesa.
 2. **Filtrar la galería** — si hay más de 5 videos y más de una categoría o plataforma, aparecen los botones. *Todos* / *Todas* muestra también la tarjeta *Video próximamente*.
-3. **Reproducir un video** — clic en YouTube, TikTok, Instagram o Facebook: el player se embebe en el recuadro 9:16.
+3. **Reproducir un video** — clic en YouTube, TikTok, Instagram, Facebook o Vimeo: el player se embebe en el recuadro 9:16.
 4. **Abrir el lightbox** — clic en cualquier imagen: flechas, `Escape` para cerrar, clic fuera de la foto, contador `1 / N`.
 5. **Probar contacto** — los botones de email y WhatsApp usan los valores de tu `.env`.
 
@@ -184,7 +184,7 @@ El JS intenta primero `*.local.json`. Si no existe (como en Pages), usa `*.json`
 |---|---|
 | `data/videos.local.json` | Lo editas en local. Gitignored. `build.sh` no lo sobrescribe si ya existe. |
 | `data/videos.json` | El que se sube al repo y se publica en GitHub Pages. |
-| `data/videos.example.json` | Plantilla de referencia (YouTube, TikTok, Instagram, Facebook, *coming soon*). |
+| `data/videos.example.json` | Plantilla de referencia (YouTube, TikTok, Instagram, Facebook, Vimeo, *coming soon*). |
 
 **Campos**
 
@@ -194,9 +194,9 @@ El JS intenta primero `*.local.json`. Si no existe (como en Pages), usa `*.json`
 | `title` | Sí | Título bajo la tarjeta |
 | `subtitle` | Sí | Texto corto (categoría visual o formato) |
 | `category` | En videos reales | Filtro (`Belleza`, `Storytime`, `Tecnologia`, `Lifestyle`, …) |
-| `platform` | En videos reales | `youtube`, `tiktok`, `instagram` o `facebook` |
+| `platform` | En videos reales | `youtube`, `tiktok`, `instagram`, `facebook` o `vimeo` |
 | `youtubeId` | YouTube (opcional) | Solo el ID. Si pegas `videoUrl`, no hace falta |
-| `videoUrl` | YouTube / TikTok / Instagram / Facebook | URL completa (Shorts, reel, share, `watch?v=`, `youtu.be`) |
+| `videoUrl` | YouTube / TikTok / Instagram / Facebook / Vimeo | URL completa (Shorts, reel, share, `watch?v=`, `youtu.be`, `vimeo.com/ID`) |
 | `thumbnail` | Recomendado | Portada en `assets/images/thumbnail/`. YouTube puede omitirse |
 | `comingSoon` | Placeholder | `true` para la tarjeta **Video próximamente** |
 
@@ -205,7 +205,7 @@ El JS intenta primero `*.local.json`. Si no existe (como en Pages), usa `*.json`
 Guarda las portadas en **`assets/images/thumbnail/`** (no sueltas en `assets/images/`).
 
 1. Crea la carpeta si no existe: `assets/images/thumbnail/`
-2. Pon el archivo (`tiktok-1.jpg`, `instagram-1.jpg`, `facebook-1.jpg`, `youtube-1.jpg`, …)
+2. Pon el archivo (`tiktok-1.jpg`, `instagram-1.jpg`, `facebook-1.jpg`, `youtube-1.jpg`, `vimeo-1.jpg`, …)
 3. En el JSON usa esa ruta, por ejemplo `"thumbnail": "assets/images/thumbnail/tiktok-1.jpg"`
 
 Si falta el archivo, la tarjeta se ve vacía hasta que carga el player. En YouTube, si no pones `thumbnail`, se usa sola la miniatura de YouTube.
@@ -276,13 +276,31 @@ Compartir → Copiar enlace. Sirve un `share/r/...` o la URL del reel (`facebook
 
 Si el embed sale en blanco, abre el reel en Facebook, copia la URL de la barra (`facebook.com/reel/...`) y usa esa.
 
+#### Vimeo
+
+Pega la URL del video en `videoUrl` (`vimeo.com/ID` o `player.vimeo.com/video/ID`). El video tiene que ser **público** y permitir embed. Al clic, el player se abre en la tarjeta.
+
+```json
+{
+  "id": 5,
+  "title": "Campaña de producto",
+  "subtitle": "UGC",
+  "category": "Lifestyle",
+  "platform": "vimeo",
+  "videoUrl": "https://vimeo.com/123456789",
+  "thumbnail": "assets/images/thumbnail/vimeo-1.jpg"
+}
+```
+
+Pon una miniatura propia: Vimeo no genera portada automática como YouTube.
+
 #### Video próximamente
 
 No hace falta `platform` ni URL:
 
 ```json
 {
-  "id": 5,
+  "id": 6,
   "title": "Video próximamente",
   "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
   "comingSoon": true
@@ -475,6 +493,7 @@ Dashboard: `https://TU-CODIGO.goatcounter.com`
 | Al compartir no sale la foto | `og:image` debe ser absoluta. En local define `SITE_URL` y corre `bash build.sh`. En Pages, `PROFILE_IMAGE_PATH` del Secret tiene que ser una ruta relativa (`assets/images/...`). |
 | La tarjeta de video se ve vacía / 404 de imagen | Falta el archivo de `thumbnail`. Créalo en `assets/images/thumbnail/` o, en YouTube, quita el campo para usar la portada de YouTube. |
 | Instagram o Facebook en blanco | El reel debe ser público. En Facebook prefiere `facebook.com/reel/ID` antes que `share/r/...`. |
+| Vimeo en blanco o no reproduce | `platform` tiene que ser `"vimeo"` y `videoUrl` la URL del video (`vimeo.com/123456789`). El video debe ser público y permitir embed. Recarga forzada. |
 | YouTube Short no reproduce | `platform` tiene que ser `"youtube"` y `videoUrl` la URL del Short (`youtube.com/shorts/...`). Recarga forzada. |
 | La página se ve en blanco | Error de JS. Abre la consola (`F12`). Recarga forzada (`Ctrl+Shift+R`). |
 

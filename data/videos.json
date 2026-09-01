@@ -7,10 +7,28 @@
       "category": "Lifestyle",
       "platform": "tiktok",
       "videoUrl": "https://www.tiktok.com/@soy_danielaorbe/video/7678200631508749576?is_from_webapp=1&sender_device=pc&web_id=7466110252145214982",
-      "thumbnail": "assets/images/thumbnail-tiktok-1.jpg"
+      "thumbnail": "assets/images/thumbnail/tiktok-1.webp"
     },
     {
       "id": 2,
+      "title": "Rutina anti-imperfecciones",
+      "subtitle": "Probando la rutina anti-imperfecciones de Nivea y Garnier para decirle adiós a los granitos este mes",
+      "category": "Skincare",
+      "platform": "tiktok",
+      "videoUrl": "https://www.tiktok.com/@soy_danielaorbe/video/7680579336583531794?_r=1&_t=ZS-99NBO3OCNpH",
+      "thumbnail": "assets/images/thumbnail/tiktok-2.webp"
+    },
+    {
+      "id": 3,
+      "title": "Rexona no te abandona",
+      "subtitle": "Probando la nueva línea de desodorantes de Rexona y cómo me ha ayudado a mantenerme fresca durante todo el día",
+      "category": "Lifestyle",
+      "platform": "vimeo",
+      "videoUrl": "https://player.vimeo.com/video/1223102942?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+      "thumbnail": "assets/images/thumbnail/vimeo-3.webp"
+    },
+    {
+      "id": 4,
       "title": "Video próximamente",
       "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
       "comingSoon": true
