@@ -2,46 +2,6 @@
   "images": [
     {
       "id": 1,
-      "title": "",
-      "category": "Lifestyle",
-      "aspect": "vertical",
-      "src": "assets/images/gallery/daniela-orbe-1.webp",
-      "alt": "Creadora de contenido UGC modelando un vestido"
-    },
-    {
-      "id": 2,
-      "title": "",
-      "category": "Lifestyle",
-      "aspect": "square",
-      "src": "assets/images/gallery/daniela-orbe-2.webp",
-      "alt": "Creadora de contenido UGC viendo el horizonte"
-    },
-    {
-      "id": 3,
-      "title": "",
-      "category": "Lifestyle",
-      "aspect": "horizontal",
-      "src": "assets/images/gallery/daniela-orbe-3.webp",
-      "alt": "Creadora de contenido UGC sonriendo"
-    },
-    {
-      "id": 4,
-      "title": "",
-      "category": "Lifestyle",
-      "aspect": "square",
-      "src": "assets/images/gallery/daniela-orbe-4.webp",
-      "alt": "Creadora de contenido UGC modelando en valquirico"
-    },
-    {
-      "id": 5,
-      "title": "",
-      "category": "Lifestyle",
-      "aspect": "horizontal",
-      "src": "assets/images/gallery/daniela-orbe-5.webp",
-      "alt": "Creadora de contenido UGC sonriendo en la torre latinoamericana"
-    },
-    {
-      "id": 6,
       "title": "Desodorante Rexona clinical",
       "category": "Cuidado personal",
       "aspect": "vertical",
@@ -49,7 +9,7 @@
       "alt": "Creadora de contenido UGC usando desodorante Rexona clinical"
     },
     {
-      "id": 7,
+      "id": 2,
       "title": "Exfoliante Nivea derma skin clear",
       "category": "Skincare",
       "aspect": "horizontal",
@@ -57,7 +17,7 @@
       "alt": "Creadora de contenido UGC usando exfoliante Nivea derma skin clear"
     },
     {
-      "id": 8,
+      "id": 3,
       "title": "Serum Nivea derma skin clear",
       "category": "Skincare",
       "aspect": "vertical",
@@ -65,7 +25,7 @@
       "alt": "Creadora de contenido UGC usando serum Nivea derma skin clear"
     },
     {
-      "id": 9,
+      "id": 4,
       "title": "Lipstick Clarins",
       "category": "Makeup",
       "aspect": "square",
