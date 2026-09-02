@@ -5,7 +5,7 @@
       "title": "",
       "category": "Lifestyle",
       "aspect": "vertical",
-      "src": "assets/images/gallery/daniela-orbe-1.jpeg",
+      "src": "assets/images/gallery/daniela-orbe-1.webp",
       "alt": "Creadora de contenido UGC modelando un vestido"
     },
     {
@@ -13,7 +13,7 @@
       "title": "",
       "category": "Lifestyle",
       "aspect": "square",
-      "src": "assets/images/gallery/daniela-orbe-2.jpeg",
+      "src": "assets/images/gallery/daniela-orbe-2.webp",
       "alt": "Creadora de contenido UGC viendo el horizonte"
     },
     {
@@ -21,24 +21,56 @@
       "title": "",
       "category": "Lifestyle",
       "aspect": "horizontal",
-      "src": "assets/images/gallery/daniela-orbe-3.jpeg",
+      "src": "assets/images/gallery/daniela-orbe-3.webp",
       "alt": "Creadora de contenido UGC sonriendo"
     },
     {
       "id": 4,
       "title": "",
       "category": "Lifestyle",
-      "aspect": "vertical",
-      "src": "assets/images/gallery/daniela-orbe-4.jpeg",
+      "aspect": "square",
+      "src": "assets/images/gallery/daniela-orbe-4.webp",
       "alt": "Creadora de contenido UGC modelando en valquirico"
     },
     {
       "id": 5,
       "title": "",
       "category": "Lifestyle",
-      "aspect": "square",
-      "src": "assets/images/gallery/daniela-orbe-5.jpeg",
+      "aspect": "horizontal",
+      "src": "assets/images/gallery/daniela-orbe-5.webp",
       "alt": "Creadora de contenido UGC sonriendo en la torre latinoamericana"
+    },
+    {
+      "id": 6,
+      "title": "Desodorante Rexona clinical",
+      "category": "Cuidado personal",
+      "aspect": "vertical",
+      "src": "assets/images/gallery/daniela-orbe-6.webp",
+      "alt": "Creadora de contenido UGC usando desodorante Rexona clinical"
+    },
+    {
+      "id": 7,
+      "title": "Exfoliante Nivea derma skin clear",
+      "category": "Skincare",
+      "aspect": "horizontal",
+      "src": "assets/images/gallery/daniela-orbe-7.webp",
+      "alt": "Creadora de contenido UGC usando exfoliante Nivea derma skin clear"
+    },
+    {
+      "id": 8,
+      "title": "Serum Nivea derma skin clear",
+      "category": "Skincare",
+      "aspect": "vertical",
+      "src": "assets/images/gallery/daniela-orbe-8.webp",
+      "alt": "Creadora de contenido UGC usando serum Nivea derma skin clear"
+    },
+    {
+      "id": 9,
+      "title": "Lipstick Clarins",
+      "category": "Makeup",
+      "aspect": "square",
+      "src": "assets/images/gallery/daniela-orbe-9.webp",
+      "alt": "Creadora de contenido UGC usando lipstick Clarins"
     }
   ]
 }

@@ -22,13 +22,22 @@
       "id": 3,
       "title": "Rexona no te abandona",
       "subtitle": "Probando la nueva línea de desodorantes de Rexona y cómo me ha ayudado a mantenerme fresca durante todo el día",
-      "category": "Lifestyle",
+      "category": "Cuidado personal",
       "platform": "vimeo",
       "videoUrl": "https://player.vimeo.com/video/1223102942?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
       "thumbnail": "assets/images/thumbnail/vimeo-3.webp"
     },
     {
       "id": 4,
+      "title": "Usando la aplicación Moises",
+      "subtitle": "Deja de hacer el oso cantando y que Moises te ayude a mejorar.",
+      "category": "Tecnología",
+      "platform": "vimeo",
+      "videoUrl": "https://player.vimeo.com/video/1223468383?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+      "thumbnail": "assets/images/thumbnail/vimeo-4.webp"
+    },
+    {
+      "id": 5,
       "title": "Video próximamente",
       "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
       "comingSoon": true

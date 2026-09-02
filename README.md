@@ -367,11 +367,20 @@ En el repo: **Settings → Secrets and variables → Actions → New repository 
 
 ### Activar GitHub Pages
 
-1. **Settings → Pages**
-2. Source: **GitHub Actions**
-3. Guarda y espera a que el workflow de `main` termine en verde
+GitHub Pages **no lee** los secrets en el navegador. Solo el workflow de Actions sustituye `{{CONTACT_EMAIL}}` (y el resto de placeholders) **antes** de publicar. Por eso el Source tiene que ser Actions, no una rama.
 
-La URL quedará en `https://<usuario>.github.io/<repo>/`.
+1. Sube el repo a GitHub y haz push de `main`.
+2. Crea los **Repository secrets** (tabla de arriba):
+   **Settings → Secrets and variables → Actions → pestaña Secrets → New repository secret**.
+   - Usa **Repository secrets**, no Variables y no secrets del environment `github-pages`.
+   - El nombre debe coincidir exactamente (`CONTACT_EMAIL`, no `contact_email`).
+3. **Settings → Pages**
+   - **Source:** GitHub Actions
+   - **No** elijas *Deploy from a branch*. Esa opción publica el `index.html` crudo del repo y en el sitio se verá `{{CONTACT_EMAIL}}` en vez del correo.
+4. Guarda. En **Actions** espera a que **Build & Deploy** termine en verde.
+5. Si creaste o cambiaste un secret **después** del último deploy, vuelve a correr el workflow: **Actions → Build & Deploy → Run workflow** (o un push nuevo a `main`). Crear el secret no actualiza el sitio por sí solo.
+
+La URL quedará en `https://<usuario>.github.io/<repo>/`. Recarga forzada (`Ctrl+Shift+R`) la primera vez.
 
 ---
 
@@ -489,7 +498,7 @@ Dashboard: `https://TU-CODIGO.goatcounter.com`
 | Cambié el JSON y no veo el video | Recarga forzada (`Ctrl+Shift+R`). Confirma que editaste `videos.local.json` en local. |
 | `build.sh` no actualiza mis videos | Es intencional: no pisa `*.local.json`. Edítalos a mano, o bórralos y vuelve a ejecutar el script para copiarlos desde producción. |
 | `Address already in use` | Cambia el puerto: `python3 -m http.server 8082`. |
-| Pages desplegó pero salen `{{CONTACT_EMAIL}}` | Faltan GitHub Secrets. Deben coincidir con los nombres de la tabla de arriba. |
+| Pages desplegó pero salen `{{CONTACT_EMAIL}}` | 1) Source de Pages debe ser **GitHub Actions**, no *Deploy from a branch*. 2) Los valores van en **Repository secrets** (no Variables ni secrets de `github-pages`). 3) Tras crear o cambiar un secret, vuelve a correr **Build & Deploy**. |
 | Al compartir no sale la foto | `og:image` debe ser absoluta. En local define `SITE_URL` y corre `bash build.sh`. En Pages, `PROFILE_IMAGE_PATH` del Secret tiene que ser una ruta relativa (`assets/images/...`). |
 | La tarjeta de video se ve vacía / 404 de imagen | Falta el archivo de `thumbnail`. Créalo en `assets/images/thumbnail/` o, en YouTube, quita el campo para usar la portada de YouTube. |
 | Instagram o Facebook en blanco | El reel debe ser público. En Facebook prefiere `facebook.com/reel/ID` antes que `share/r/...`. |
