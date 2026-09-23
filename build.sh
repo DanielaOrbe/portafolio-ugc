@@ -85,6 +85,18 @@ sed -i "s|{{PROFILE_IMAGE_PATH}}|${PROFILE_IMAGE_PATH}|g" index.local.html
 # Analytics
 sed -i "s|{{GOATCOUNTER_CODE}}|${GOATCOUNTER_CODE}|g" index.local.html
 
+# Páginas /share/{id}/ (Open Graph por video) y admin/config.js
+VIDEOS_JSON="data/videos.json"
+if [ -f data/videos.local.json ]; then
+  VIDEOS_JSON="data/videos.local.json"
+fi
+python3 -m pip install --user pillow >/dev/null 2>&1 || true
+python3 scripts/generate_pages.py \
+  --html index.local.html \
+  --videos "$VIDEOS_JSON" \
+  --site-url "${SITE_URL:-}" \
+  --admin-pin "${ADMIN_PIN:-}"
+
 # ========== data/videos.local.json ==========
 # Copia de trabajo local (gitignored). Si ya existe, no se pisa.
 if [ -f data/videos.json ]; then
@@ -114,6 +126,7 @@ fi
 
 echo -e "${GREEN}✅ index.local.html generado correctamente${NC}"
 echo ""
-echo "Para previsualizar:"
-echo -e "  ${GREEN}open index.local.html${NC}  (macOS)"
-echo -e "  ${GREEN}xdg-open index.local.html${NC}  (Linux)"
+echo "Para previsualizar (con servidor local):"
+echo -e "  ${GREEN}python3 -m http.server 8081${NC}"
+echo -e "  Portafolio: ${GREEN}http://127.0.0.1:8081/index.local.html${NC}"
+echo -e "  Admin:      ${GREEN}http://127.0.0.1:8081/admin/${NC}"

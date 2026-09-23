@@ -47,6 +47,15 @@
     },
     {
       "id": 6,
+      "title": "Unboxing lancôme",
+      "subtitle": "Unboxing lancôme, porfin llego mi regalito",
+      "category": "Beauty",
+      "platform": "tiktok",
+      "videoUrl": "https://www.tiktok.com/@soy_danielaorbe/video/7688465352396786962?_r=1&_t=ZS-99yZuVT1tRv",
+      "thumbnail": "assets/images/thumbnail/tiktok-6.webp"
+    },
+    {
+      "id": 7,
       "title": "Video próximamente",
       "subtitle": "Nuevo contenido en camino. Sígueme en redes para no perdértelo.",
       "comingSoon": true

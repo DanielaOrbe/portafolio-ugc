@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Compartir videos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: '#FAFAFA',
+            cream: '#F7F1EE',
+            rose: {
+              soft: '#F5D9DE',
+              blush: '#E8B4BC',
+            },
+            champ: '#E7C9A8',
+            ink: '#0A0A0A',
+            muted: '#5A5A5A',
+          },
+          fontFamily: {
+            display: ['Poppins', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-base text-ink font-body min-h-screen">
+
+  <div id="pin-gate" class="fixed inset-0 z-50 grid place-items-center px-6 bg-base">
+    <div class="w-full max-w-sm bg-white rounded-3xl p-8 shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-widest text-muted">Acceso</p>
+      <h1 class="mt-2 font-display text-2xl font-bold">Admin</h1>
+      <p id="setup-message" class="mt-4 text-sm text-muted leading-relaxed" hidden></p>
+      <form id="pin-form" class="mt-6 space-y-4">
+        <div>
+          <label for="pin-input" class="block text-sm font-medium text-muted">PIN de acceso</label>
+          <input id="pin-input" name="pin" type="password" autocomplete="off" autocapitalize="off" spellcheck="false"
+                 class="mt-2 w-full rounded-2xl border border-champ/60 bg-base px-4 py-3 text-ink outline-none focus:border-rose-blush"
+                 required />
+        </div>
+        <p id="pin-error" class="text-sm text-red-600" hidden></p>
+        <button id="pin-submit" type="submit"
+                class="w-full bg-ink text-white font-display font-semibold px-5 py-3 rounded-full hover:opacity-90 transition-opacity">
+          Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-app" class="admin-hidden">
+    <header class="border-b border-champ/40 bg-white">
+      <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 px-6 py-5">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-muted">Portafolio UGC</p>
+          <h1 class="font-display text-2xl font-bold">Compartir videos</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="../" class="text-sm font-medium text-muted underline decoration-rose-blush underline-offset-4 hover:text-ink">
+            Ver portafolio
+          </a>
+          <button id="logout-btn" type="button"
+                  class="text-sm font-medium px-4 py-2 rounded-full border border-ink/15 hover:bg-cream transition-colors">
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-10">
+      <p class="text-muted text-sm max-w-2xl leading-relaxed">
+        Copia el enlace del video. Al pegarlo en WhatsApp o redes, la vista previa usa la miniatura,
+        el título y el subtítulo de ese video. Quien abra el link ve el portafolio completo.
+      </p>
+
+      <p id="empty-state" class="mt-10 text-sm text-muted" hidden>
+        No hay videos para compartir.
+      </p>
+
+      <div class="mt-8 overflow-x-auto bg-white rounded-3xl shadow-sm">
+        <table class="w-full text-left min-w-[44rem]">
+          <thead>
+            <tr class="border-b border-champ/40 text-xs font-semibold uppercase tracking-wider text-muted">
+              <th class="pl-6 pr-4 py-4 font-medium">Video</th>
+              <th class="pr-4 py-4 font-medium">Título</th>
+              <th class="pr-4 py-4 font-medium">Descripción</th>
+              <th class="pr-4 py-4 font-medium">Categoría</th>
+              <th class="pr-4 py-4 font-medium">Plataforma</th>
+              <th class="pr-6 py-4 font-medium">Enlace</th>
+            </tr>
+          </thead>
+          <tbody id="video-rows"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

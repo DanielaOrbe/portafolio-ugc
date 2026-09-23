@@ -2,6 +2,10 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
 }
+/* Gana a utilidades Tailwind (grid/flex) al mostrar u ocultar el admin */
+.admin-hidden {
+  display: none !important;
+}
 body {
   background-color: #FAFAFA;
   font-family: 'Inter', sans-serif;
@@ -62,6 +66,11 @@ h1, h2, h3, .font-display { font-family: 'Poppins', sans-serif; }
 }
 #gallery-grid .video-card {
   width: min(100%, 280px);
+}
+.video-card-shared {
+  outline: 2px solid #E8B4BC;
+  outline-offset: 8px;
+  border-radius: 1.25rem;
 }
 .video-card:hover .play-overlay,
 .video-card:focus-within .play-overlay {
@@ -213,6 +222,103 @@ a:focus-visible, button:focus-visible {
 }
 .lightbox-next {
   right: 1.5rem;
+}
+
+/* ---------- Modal de video (páginas /share/{id}/) ---------- */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overscroll-behavior: contain;
+}
+.video-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+.video-modal-dialog {
+  width: min(100%, 28rem);
+  max-height: calc(100dvh - 1.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+.video-modal-player {
+  position: relative;
+  width: min(100%, 400px, calc((100dvh - 9rem) * 9 / 16));
+  aspect-ratio: 9 / 16;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #0A0A0A;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+}
+.video-modal-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #0A0A0A;
+}
+.video-modal-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+.video-modal-meta {
+  width: min(100%, 400px);
+  text-align: center;
+  padding: 0 0.25rem;
+}
+.video-modal-close {
+  position: absolute;
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: max(0.75rem, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+}
+.video-modal-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .video-modal-dialog {
+    flex-direction: row;
+    align-items: center;
+    width: min(100%, 52rem);
+    gap: 1.25rem;
+  }
+  .video-modal-player {
+    width: auto;
+    height: min(82dvh, 420px);
+    aspect-ratio: 9 / 16;
+  }
+  .video-modal-meta {
+    width: min(100%, 18rem);
+    text-align: left;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,6 +6,26 @@
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+const siteRootUrl = () => {
+  const url = new URL(window.location.href);
+  url.hash = '';
+  url.search = '';
+  url.pathname = url.pathname.replace(/\/share\/\d+(?:\/(?:index\.html)?)?\/?$/, '/');
+  if (!url.pathname.endsWith('/')) {
+    url.pathname = url.pathname.replace(/[^/]+$/, '') || '/';
+  }
+  return url;
+};
+
+const dataFileUrl = (file) => new URL(file, siteRootUrl()).toString();
+
+const homePageUrl = () => {
+  const root = siteRootUrl();
+  const host = window.location.hostname;
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+  return isLocal ? new URL('index.local.html', root).toString() : root.toString();
+};
+
 // ---------- Navbar scroll ----------
 const navbar = document.getElementById('navbar');
 const onScroll = () => {
@@ -251,6 +271,7 @@ const createComingSoonCard = (video) => {
   const article = document.createElement('article');
   article.className = 'video-card reveal';
   article.dataset.comingSoon = 'true';
+  if (video.id != null) article.dataset.videoId = String(video.id);
   article.innerHTML = `
     <div class="relative aspect-[9/16] rounded-2xl overflow-hidden border-2 border-dashed border-champ/50 bg-cream/50 flex flex-col items-center justify-center p-6 text-center">
       <div class="w-14 h-14 rounded-full bg-champ/30 grid place-items-center mb-4" aria-hidden="true">
@@ -274,6 +295,7 @@ const createVideoCard = (video) => {
   article.className = 'video-card reveal';
   article.dataset.category = video.category || '';
   article.dataset.platform = video.platform || '';
+  if (video.id != null) article.dataset.videoId = String(video.id);
 
   const thumbnailSrc = getVideoThumbnail(video);
   const ariaText = 'Reproducir';
@@ -470,6 +492,136 @@ const renderGallery = () => {
 
   // Re-vincular eventos de video
   bindVideoEvents();
+  focusSharedVideo();
+};
+
+const getSharedVideoId = () => {
+  const match = window.location.pathname.match(/\/share\/(\d+)(?:\/(?:index\.html)?)?$/);
+  return match ? match[1] : '';
+};
+
+const focusSharedVideo = () => {
+  const id = getSharedVideoId();
+  if (!id || !galleryGrid) return;
+  const card = galleryGrid.querySelector(`[data-video-id="${id}"]`);
+  if (!card) return;
+  card.classList.add('video-card-shared');
+};
+
+const getVideoEmbedSrc = (video) => {
+  const platform = video.platform;
+  if (platform === 'youtube') {
+    const id = getYouTubeId(video);
+    return id ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1` : '';
+  }
+  if (platform === 'tiktok') {
+    const id = extractTikTokVideoId(video.videoUrl);
+    return id ? `https://www.tiktok.com/player/v1/${id}?music_info=0&description=0&autoplay=1` : '';
+  }
+  if (platform === 'instagram') return getInstagramEmbedUrl(video.videoUrl);
+  if (platform === 'facebook') return getFacebookEmbedUrl(video.videoUrl);
+  if (platform === 'vimeo') return getVimeoEmbedUrl(video.videoUrl);
+  return '';
+};
+
+const ensureVideoModal = () => {
+  let modal = document.getElementById('video-modal');
+  if (modal) return modal;
+
+  modal = document.createElement('div');
+  modal.id = 'video-modal';
+  modal.className = 'video-modal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-labelledby', 'video-modal-title');
+  modal.setAttribute('aria-hidden', 'true');
+  modal.innerHTML = `
+    <button type="button" class="video-modal-close" aria-label="Cerrar video">&times;</button>
+    <div class="video-modal-dialog">
+      <div id="video-modal-player" class="video-modal-player"></div>
+      <div class="video-modal-meta">
+        <h2 id="video-modal-title" class="font-display font-semibold text-white text-base md:text-lg leading-snug"></h2>
+        <p id="video-modal-subtitle" class="text-sm text-white/70 mt-1 leading-relaxed"></p>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  return modal;
+};
+
+const closeVideoModal = () => {
+  const modal = document.getElementById('video-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  const player = document.getElementById('video-modal-player');
+  if (player) player.innerHTML = '';
+  if (!lightbox?.classList.contains('active')) {
+    document.body.style.overflow = '';
+  }
+  if (getSharedVideoId()) {
+    window.location.replace(homePageUrl());
+  }
+};
+
+const openVideoModal = (video) => {
+  const modal = ensureVideoModal();
+  const player = document.getElementById('video-modal-player');
+  const titleEl = document.getElementById('video-modal-title');
+  const subtitleEl = document.getElementById('video-modal-subtitle');
+  if (!player) return;
+
+  player.innerHTML = '';
+  if (titleEl) titleEl.textContent = video.title || '';
+  if (subtitleEl) subtitleEl.textContent = video.subtitle || '';
+
+  const embedSrc = getVideoEmbedSrc(video);
+  if (embedSrc) {
+    player.appendChild(createVideoIframe(embedSrc, video.title || 'Video', true));
+  } else if (video.videoUrl) {
+    player.innerHTML = `
+      <div class="video-modal-fallback">
+        <a href="${video.videoUrl}" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center bg-white text-ink font-display font-semibold px-5 py-3 rounded-full">
+          Ver video
+        </a>
+      </div>`;
+  }
+
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.video-modal-close')?.focus();
+};
+
+let shareModalBound = false;
+const bindVideoModalEvents = () => {
+  if (shareModalBound) return;
+  const modal = ensureVideoModal();
+  shareModalBound = true;
+
+  modal.querySelector('.video-modal-close')?.addEventListener('click', closeVideoModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeVideoModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    if (!modal.classList.contains('active')) return;
+    event.stopImmediatePropagation();
+    closeVideoModal();
+  });
+};
+
+let shareModalOpened = false;
+const maybeOpenSharedVideo = () => {
+  if (shareModalOpened) return;
+  const id = getSharedVideoId();
+  if (!id) return;
+  const video = allVideos.find((item) => String(item.id) === id && !isComingSoon(item));
+  if (!video) return;
+  shareModalOpened = true;
+  bindVideoModalEvents();
+  openVideoModal(video);
+  focusSharedVideo();
 };
 
 // ---------- Eventos de video ----------
@@ -556,8 +708,8 @@ const loadVideos = async () => {
   try {
     // Intentar data/videos.local.json primero (generado por build.sh en local)
     // Si no existe, usar data/videos.json (procesado por GitHub Actions en producción)
-    let response = await fetch('data/videos.local.json');
-    if (!response.ok) response = await fetch('data/videos.json');
+    let response = await fetch(dataFileUrl('data/videos.local.json'));
+    if (!response.ok) response = await fetch(dataFileUrl('data/videos.json'));
     if (!response.ok) throw new Error('No se pudo cargar videos.json');
 
     const data = await response.json();
@@ -565,6 +717,7 @@ const loadVideos = async () => {
 
     renderFilters(allVideos);
     renderGallery();
+    maybeOpenSharedVideo();
   } catch (error) {
     console.error('Error cargando videos:', error);
     if (!galleryGrid) return;
@@ -592,8 +745,8 @@ let currentLightboxIndex = 0;
 
 const loadImageData = async () => {
   try {
-    let response = await fetch('data/images.local.json');
-    if (!response.ok) response = await fetch('data/images.json');
+    let response = await fetch(dataFileUrl('data/images.local.json'));
+    if (!response.ok) response = await fetch(dataFileUrl('data/images.json'));
     if (!response.ok) throw new Error('No se pudo cargar images.json');
 
     const data = await response.json();

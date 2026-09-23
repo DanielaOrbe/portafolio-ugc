@@ -4,6 +4,8 @@
 index.local.html
 data/videos.local.json
 data/images.local.json
+share/
+admin/config.js
 node_modules/
 assets/images/gallery/originales/
 assets/images/thumbnail/originales/

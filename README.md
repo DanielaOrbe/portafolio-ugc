@@ -20,6 +20,7 @@ Clonas el repo, rellenas tu `.env` y dos JSON (videos e imágenes). El sitio se 
 - [Características](#-características)
 - [Inicio rápido](#-inicio-rápido)
 - [Uso](#-uso)
+- [Admin: compartir videos](#-admin-compartir-videos)
 - [Personalizar contenido](#-personalizar-contenido)
 - [Despliegue](#-despliegue)
 - [Variables de entorno](#-variables-de-entorno)
@@ -59,6 +60,7 @@ No hay backend ni base de datos. El contenido vive en JSON; el contacto y las re
 - Tarjeta **Video próximamente** para anunciar contenido nuevo
 - Sección de servicios, proceso de trabajo y herramientas
 - Datos personales **fuera del repo** (`.env` gitignored)
+- Panel **`/admin/`** con PIN: copia enlaces `/share/{id}/` con vista previa (Open Graph) por video
 - Analytics con [GoatCounter](https://goatcounter.com/) (sin cookies)
 - Deploy automático con GitHub Actions → GitHub Pages
 
@@ -99,7 +101,10 @@ FACEBOOK_USERNAME_ID=tu_usuario_facebook
 SITE_URL=https://tu-usuario.github.io/tu-repo
 PROFILE_IMAGE_PATH=assets/images/tu-foto.webp
 GOATCOUNTER_CODE=tu_codigo
+ADMIN_PIN='tu-pin-seguro'
 ```
+
+> Si el PIN tiene caracteres especiales (`%`, `$`, `!`, espacios), ponlo **entre comillas simples** como arriba.
 
 ### 3. Generar el HTML local
 
@@ -107,7 +112,7 @@ GOATCOUNTER_CODE=tu_codigo
 bash build.sh
 ```
 
-Esto crea `index.local.html` con tus datos. Si no existen, también copia `data/videos.json` → `data/videos.local.json` y `data/images.json` → `data/images.local.json`. **Si esos `.local.json` ya existen, no los pisa.**
+Esto crea `index.local.html` con tus datos, genera `admin/config.js` (solo el hash del PIN) y las páginas `/share/{id}/`. Si no existen, también copia `data/videos.json` → `data/videos.local.json` y `data/images.json` → `data/images.local.json`. **Si esos `.local.json` ya existen, no los pisa.**
 
 ### 4. Servir y abrir
 
@@ -115,7 +120,8 @@ Esto crea `index.local.html` con tus datos. Si no existen, también copia `data/
 python3 -m http.server 8081
 ```
 
-Abre [http://127.0.0.1:8081/index.local.html](http://127.0.0.1:8081/index.local.html).
+- Portafolio: [http://127.0.0.1:8081/index.local.html](http://127.0.0.1:8081/index.local.html)
+- Admin: [http://127.0.0.1:8081/admin/](http://127.0.0.1:8081/admin/) ← entra con el mismo `ADMIN_PIN`
 
 Si el puerto está ocupado (`Address already in use`), usa otro:
 
@@ -134,6 +140,7 @@ Con el servidor corriendo, esto es lo que puedes hacer de inmediato:
 3. **Reproducir un video** — clic en YouTube, TikTok, Instagram, Facebook o Vimeo: el player se embebe en el recuadro 9:16.
 4. **Abrir el lightbox** — clic en cualquier imagen: flechas, `Escape` para cerrar, clic fuera de la foto, contador `1 / N`.
 5. **Probar contacto** — los botones de email y WhatsApp usan los valores de tu `.env`.
+6. **Copiar un enlace para compartir** — abre `/admin/`, escribe tu PIN y copia el link de un video (vista previa con miniatura y título).
 
 ### Añadir un video en 30 segundos
 
@@ -162,11 +169,45 @@ Local                         Producción (GitHub Pages)
 ─────────────────────────     ────────────────────────────
 .env          → build.sh      GitHub Secrets → deploy.yml
 index.local.html              index.html (ya reemplazado)
+admin/config.js (hash PIN)    admin/config.js (hash del Secret)
+share/{id}/                   share/{id}/
 videos.local.json  (prioridad) videos.json
 images.local.json  (prioridad) images.json
 ```
 
 El JS intenta primero `*.local.json`. Si no existe (como en Pages), usa `*.json`.
+
+---
+
+## Admin: compartir videos
+
+El panel en `/admin/` lista tus videos y te deja **copiar un enlace** por cada uno. Ese link apunta a `/share/{id}/`: una página ligera con meta Open Graph (título, subtítulo, miniatura). Al pegarlo en WhatsApp o redes, la vista previa muestra ese video; quien abre el link ve el portafolio.
+
+El PIN **nunca se publica en texto plano**. `build.sh` (local) y `deploy.yml` (CI) generan `admin/config.js` con un hash SHA-256. Ese archivo está en `.gitignore` y se regenera en cada build.
+
+### Local
+
+1. Define `ADMIN_PIN` en `.env` (entre comillas si tiene caracteres especiales).
+2. Ejecuta `bash build.sh` (crea o actualiza `admin/config.js` y `share/`).
+3. Con el servidor corriendo, abre [http://127.0.0.1:8081/admin/](http://127.0.0.1:8081/admin/).
+4. Escribe el mismo PIN. Copia el enlace del video que quieras compartir.
+
+Tras cambiar el PIN, vuelve a correr `bash build.sh` y recarga el admin (`Ctrl+Shift+R`).
+
+### Producción (GitHub Pages)
+
+1. Crea o actualiza el **Repository secret** `ADMIN_PIN` con el mismo valor (o el que quieras usar en vivo).
+2. Vuelve a desplegar: push a `main` o **Actions → Build & Deploy → Run workflow**.
+3. Entra a `https://<usuario>.github.io/<repo>/admin/` con ese PIN.
+
+Cambiar solo el `.env` local **no** actualiza el sitio publicado. El PIN de producción sale del Secret.
+
+### Seguridad (qué protege y qué no)
+
+- El panel solo muestra enlaces de compartir; no edita el repo ni sube archivos.
+- Hay un límite de intentos de PIN por sesión del navegador.
+- Cualquiera que sepa la URL `/admin/` puede ver la pantalla de PIN. Elige un PIN fuerte y no lo commits.
+- Las páginas `/share/{id}/` son públicas (así funciona la vista previa al compartir).
 
 ---
 
@@ -347,7 +388,7 @@ Después de editar un `*.local.json`, recarga el navegador. Para Pages, copia lo
 
 ## Despliegue
 
-Cada push a `main` dispara GitHub Actions (`deploy.yml`): reemplaza los `{{PLACEHOLDERS}}` de `index.html` con **GitHub Secrets** y publica el sitio en Pages. `data/videos.json` y `data/images.json` se despliegan tal cual.
+Cada push a `main` dispara GitHub Actions (`deploy.yml`): reemplaza los `{{PLACEHOLDERS}}` de `index.html` con **GitHub Secrets**, genera `admin/config.js` y las páginas `/share/{id}/`, y publica el sitio en Pages. `data/videos.json` y `data/images.json` se despliegan tal cual.
 
 ### Secrets
 
@@ -362,8 +403,11 @@ En el repo: **Settings → Secrets and variables → Actions → New repository 
 | `FACEBOOK_USERNAME_ID` | Usuario, ID numérico o URL. El build usa `profile.php?id=` solo si es un número. |
 | `PROFILE_IMAGE_PATH` | Ruta relativa de la foto (ej. `assets/images/tu-foto.webp`). No uses una URL completa. |
 | `GOATCOUNTER_CODE` | Código de GoatCounter ([goatcounter.com](https://goatcounter.com/)) |
+| `ADMIN_PIN` | PIN del panel `/admin/`. Solo se publica el hash, no el PIN en claro. |
 
 `SITE_URL` no hace falta como Secret: el workflow la arma como `https://<usuario>.github.io/<repo>`. Si usas dominio propio, crea la variable de Actions `SITE_URL` (Settings → Secrets and variables → Actions → Variables).
+
+Si cambias `ADMIN_PIN` en Secrets, **vuelve a correr el workflow**; el sitio no se actualiza solo al editar el secret.
 
 ### Activar GitHub Pages
 
@@ -398,8 +442,9 @@ El `.env` **nunca se sube** (está en `.gitignore`). En CI se usan Secrets con l
 | `SITE_URL` | URL pública, sin barra final | `https://tu-usuario.github.io/tu-repo` |
 | `PROFILE_IMAGE_PATH` | Ruta relativa de la foto de perfil | `assets/images/tu-foto.webp` |
 | `GOATCOUNTER_CODE` | Código GoatCounter, sin `@` ni URLs | `tu_codigo` |
+| `ADMIN_PIN` | PIN de `/admin/`. Usa comillas si hay `%`, `$`, etc. | `'tu-pin-seguro'` |
 
-Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`.
+Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`. El PIN solo se usa al construir el sitio; en el navegador queda un hash en `admin/config.js`.
 
 ---
 
@@ -409,13 +454,18 @@ Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`.
 ├── .env                      # Tus datos reales (gitignored)
 ├── .env-example              # Plantilla para crear .env
 ├── .github/workflows/deploy.yml
+├── admin/
+│   ├── index.html            # Panel con PIN (copiar enlaces /share/)
+│   └── config.js             # Hash del PIN + siteUrl (gitignored; lo genera el build)
 ├── assets/
 │   ├── css/style.css         # Gradientes, animaciones, lightbox
 │   ├── images/
 │   │   ├── gallery/          # Fotos del mosaico
 │   │   └── thumbnail/        # Portadas de videos (tiktok-1.jpg, …)
-│   └── js/main.js            # Navbar, galerías, lightbox, embeds
-├── build.sh                  # Genera index.local.html; no pisa *.local.json
+│   └── js/
+│       ├── admin.js          # Login PIN y lista de enlaces para compartir
+│       └── main.js           # Navbar, galerías, lightbox, embeds
+├── build.sh                  # Genera index.local.html, admin/config.js y share/; no pisa *.local.json
 ├── data/
 │   ├── images.json           # Galería de producción (sí se sube)
 │   ├── images.local.json     # Galería local (gitignored)
@@ -424,6 +474,9 @@ Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`.
 │   ├── videos.local.json     # Videos locales (gitignored)
 │   └── videos.example.json   # Ejemplo de estructura
 ├── index.html                # Plantilla con {{PLACEHOLDERS}}
+├── scripts/
+│   └── generate_pages.py     # Páginas /share/{id}/ y admin/config.js
+├── share/                    # OG por video (generado en cada build)
 ├── LICENSE
 └── README.md
 ```
@@ -431,8 +484,10 @@ Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`.
 | Archivo | Rol |
 |---|---|
 | `index.html` | Plantilla. En local, `build.sh` genera `index.local.html`. En CI, se reescribe in-place. |
-| `build.sh` | Lee `.env`, sustituye placeholders. Solo crea `*.local.json` si aún no existen. |
-| `.env` | Contacto, redes, foto, analytics. |
+| `build.sh` | Lee `.env`, sustituye placeholders, llama a `generate_pages.py`. Solo crea `*.local.json` si aún no existen. |
+| `scripts/generate_pages.py` | Genera `share/{id}/` (Open Graph) y `admin/config.js` (hash del PIN). |
+| `admin/` | Panel protegido por PIN para copiar enlaces de compartir. |
+| `.env` | Contacto, redes, foto, analytics, `ADMIN_PIN`. |
 
 ---
 
@@ -443,8 +498,9 @@ Los videos y las fotos **no van en `.env`**. Se editan en los JSON de `data/`.
 | HTML5 | Estructura semántica |
 | Tailwind CSS (CDN) | Utilidades y diseño responsivo |
 | CSS | Gradientes, animaciones, lightbox |
-| JavaScript vanilla | Navbar, scroll-reveal, galerías, embeds |
+| JavaScript vanilla | Navbar, scroll-reveal, galerías, embeds, panel admin |
 | Google Fonts | Inter (cuerpo) y Poppins (títulos) |
+| Python 3 | `scripts/generate_pages.py` (páginas `/share/` y hash del PIN) |
 | GitHub Actions | CI/CD hacia GitHub Pages |
 | GoatCounter | Analytics privacy-first (~3.5 KB, sin cookies) |
 
@@ -500,6 +556,10 @@ Dashboard: `https://TU-CODIGO.goatcounter.com`
 | `Address already in use` | Cambia el puerto: `python3 -m http.server 8082`. |
 | Pages desplegó pero salen `{{CONTACT_EMAIL}}` | 1) Source de Pages debe ser **GitHub Actions**, no *Deploy from a branch*. 2) Los valores van en **Repository secrets** (no Variables ni secrets de `github-pages`). 3) Tras crear o cambiar un secret, vuelve a correr **Build & Deploy**. |
 | Al compartir no sale la foto | `og:image` debe ser absoluta. En local define `SITE_URL` y corre `bash build.sh`. En Pages, `PROFILE_IMAGE_PATH` del Secret tiene que ser una ruta relativa (`assets/images/...`). |
+| El admin pide configurar el PIN | Falta `ADMIN_PIN` en `.env` (local) o el Secret `ADMIN_PIN` (producción). Añádelo y vuelve a construir / desplegar. |
+| Cambié el PIN y no puedo entrar en local | Pon `ADMIN_PIN='...'` entre comillas, corre `bash build.sh`, abre `http://127.0.0.1:8081/admin/` (no `file://`) y recarga forzada. |
+| Cambié el PIN en `.env` pero en Pages no entra | El sitio publicado usa el Secret `ADMIN_PIN`, no tu `.env`. Actualiza el Secret y vuelve a correr **Build & Deploy**. |
+| PIN incorrecto / demasiados intentos | Recarga la página (máx. 5 intentos). Revisa mayúsculas y caracteres especiales. |
 | La tarjeta de video se ve vacía / 404 de imagen | Falta el archivo de `thumbnail`. Créalo en `assets/images/thumbnail/` o, en YouTube, quita el campo para usar la portada de YouTube. |
 | Instagram o Facebook en blanco | El reel debe ser público. En Facebook prefiere `facebook.com/reel/ID` antes que `share/r/...`. |
 | Vimeo en blanco o no reproduce | `platform` tiene que ser `"vimeo"` y `videoUrl` la URL del video (`vimeo.com/123456789`). El video debe ser público y permitir embed. Recarga forzada. |
